@@ -1,22 +1,14 @@
-from sqlite3 import connect
-# - conectar com o banco de dados
-conn = connect("blog.db")
+import pytest
+from .database import conn
+
 cursor = conn.cursor()
 
-# - Definir e criar a table caso ela não exista
+def test_database():
 
-conn.execute(
-    """\
-        CREATE TABLE IF NOT EXISTS post(
-            id integer PRIMARY KEY AUTOINCREMENT,
-            title varchar UNIQUE NOT NULL,
-            content varchar NOT NULL,
-            author varchar NOT NULL
-        );
-    """
-)
 
-posts = [
+    # - Criar os primeiros posts iniciais para abastecer o banco de dados
+
+    posts = [
         {
             "title": "Python é eleita a linguagem mais popular",
             "content": """\
@@ -38,15 +30,21 @@ posts = [
 
     # - Inserir os posts no banco de dados caso ele esteja vazio
 
-count = cursor.execute("SELECT * FROM post;").fetchall()
-if not count:
-    cursor.executemany(
+    count = cursor.execute("SELECT * FROM post;").fetchall()
+    if not count:
+        cursor.executemany(
             """\
             INSERT INTO post (title, content, author)
             VALUES (:title, :content, :author)
             """,
             posts,
         )
-    conn.commit()
+        conn.commit()
 
-result = cursor.execute("SELECT * FROM post;").fetchall()
+    # - testando se os dados foram inseridos
+    result = cursor.execute("SELECT * FROM post;").fetchall()[0]
+
+    assert result[1] == posts[0]["title"]
+    assert result[2] == posts[0]["content"]
+    assert result[3] == posts[0]["author"]
+   
