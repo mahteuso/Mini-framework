@@ -49,4 +49,3 @@ if not count:
         )
     conn.commit()
 
-result = cursor.execute("SELECT * FROM post;").fetchall()
