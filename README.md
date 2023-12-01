@@ -17,7 +17,7 @@ Mini-framwork |- framah -| baseado na arquitetura do framwork Flask que é um do
 Conclusão:
 
 -----------------------------------------------------------------------------------------------
-Criar um framework para desenvolvimento web com Pyhton é um desafio, pois muito mais coisas além da implementação básicas devem ser feitas.
+Criar um framework para desenvolvimento web com Pyhton é um desafio, pois muito mais coisas além da implementação básica devem ser feitas.
 
 - Facilidade no registro de rotas
 - Segurança e autenticação
